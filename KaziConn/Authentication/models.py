@@ -1,12 +1,14 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+import uuid
+from django.utils import timezone
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, password=None, **extra_fields):
+    def create_user(self, email, userName, firstName, lastName, password=None, **extra_fields):
         if not email:
             raise ValueError('The Email field must be set')
         email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
+        user = self.model(email=email, userName=userName, firstName=firstName, lastName=lastName, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -25,27 +27,30 @@ class UserManager(BaseUserManager):
 
         return self.create_user(email, password, **extra_fields)
 
-class User(AbstractBaseUser):
+class User(AbstractBaseUser, PermissionsMixin):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(unique=True)
-    userName = models.CharField(max_length=50)
+    userName = models.CharField(max_length=50, unique=True)
     firstName = models.CharField(max_length=50)
     lastName = models.CharField(max_length=50)
-    identificationNumber = models.IntegerField(primary_key=True)
-    phoneNumber = models.CharField(max_length=15)
-    address = models.CharField(max_length=100)
+    
+    identificationNumber = models.CharField(max_length=20, unique=True)
+    phoneNumber = models.CharField(max_length=20, unique=True)
+    address = models.CharField(max_length=255, blank=True, null=True)
+    
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
-    lastLogin = models.DateTimeField(blank=True, null=True)
+    lastLogin = models.DateTimeField(default=timezone.now)
     isActive = models.BooleanField(default=True)
     isVerified = models.BooleanField(default=False)
+    
     failed_login_attempts = models.IntegerField(default=0)
     account_locked_until = models.DateTimeField(blank=True, null=True)
-    
     is_banned = models.BooleanField(default=False)
 
-    is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_service_provider = models.BooleanField(default=False)
+    is_admin = models.BooleanField(default=False)
 
     objects = UserManager()
 
