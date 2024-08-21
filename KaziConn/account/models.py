@@ -25,7 +25,7 @@ class UserManager(BaseUserManager):
         if extra_fields.get('is_staff') is not True:
             raise ValueError('Superuser must have is_staff=True.')
 
-        return self.create_user(email, password, **extra_fields)
+        return self.create_user(email=email, password=password, **extra_fields)
 
 class User(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -33,6 +33,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     userName = models.CharField(max_length=50, unique=True)
     firstName = models.CharField(max_length=50)
     lastName = models.CharField(max_length=50)
+    profile_picture = models.ImageField(upload_to="profile_pictures", height_field=None, width_field=None, max_length=None, blank=True, null=True)
     
     identificationNumber = models.CharField(max_length=20, unique=True)
     phoneNumber = models.CharField(max_length=20, unique=True)
