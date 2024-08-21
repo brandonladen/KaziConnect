@@ -35,8 +35,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     lastName = models.CharField(max_length=50)
     profile_picture = models.ImageField(upload_to="profile_pictures", height_field=None, width_field=None, max_length=None, blank=True, null=True)
     
-    identificationNumber = models.CharField(max_length=20, unique=True)
-    phoneNumber = models.CharField(max_length=20, unique=True)
+    identificationNumber = models.CharField(max_length=20, unique=True, blank=True, null=True)
+    phoneNumber = models.CharField(max_length=20, unique=True, blank=True, null=True)
     address = models.CharField(max_length=255, blank=True, null=True)
     
     createdAt = models.DateTimeField(auto_now_add=True)
