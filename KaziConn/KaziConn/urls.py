@@ -3,17 +3,9 @@ from django.urls import path, include
 
 urlpatterns = [
     path('supper-admin/', admin.site.urls),
-    path('account/', include('account.urls')),
+    path('user_account/', include('user_account.urls')),
+    path('accounts/', include('allauth.urls')),
+    
+    
 ]
 
-"""
->>>> Models
-
-
->>>> Models
-
->>>>> admin
-
->>>>> admin
-
-"""
