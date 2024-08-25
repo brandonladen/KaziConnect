@@ -15,4 +15,7 @@ class UserAdmin(BaseUserAdmin):
     ordering = ('email',)
     filter_horizontal = ()
 """
+
+## django axes
+
 admin.site.register(User)
