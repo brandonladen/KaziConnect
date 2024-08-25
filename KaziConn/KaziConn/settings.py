@@ -182,3 +182,5 @@ AXES_FAILURE_LIMIT = 5  # Number of failed login attempts before locking the acc
 AXES_COOLOFF_TIME = 0.25  # Cool-off time in hours
 AXES_LOCK_OUT_AT_FAILURE = True  # Lock out user on failure
 
+#CORS HEADERS CONFIGURATIONS
+CORS_ALLOW_CREDENTIALS = True
