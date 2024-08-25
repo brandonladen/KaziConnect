@@ -1,6 +1,8 @@
 
 
 from pathlib import Path
+from datetime import timedelta
+from django.conf import settings
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -17,6 +19,33 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+AUTH_USER_MODEL = 'user_account.User'
+
+#Restframework configurations
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'UPDATE_LAST_LOGIN': False,
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': settings.SECRET_KEY,
+    'VERIFYING_KEY': None,
+    'AUTH_HEADER_TYPES': ('Bearer',),  
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+    'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
+    'AUTH_HEADER_PREFIX': 'Bearer',
+}
 
 # Application definition
 
@@ -35,6 +64,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'user_account',
     'axes',
+    'rest_framework',
+    'rest_framework_simplejwt',
     
 ]
 
@@ -151,3 +182,8 @@ AXES_FAILURE_LIMIT = 5  # Number of failed login attempts before locking the acc
 AXES_COOLOFF_TIME = 0.25  # Cool-off time in hours
 AXES_LOCK_OUT_AT_FAILURE = True  # Lock out user on failure
 
+#CORS HEADERS CONFIGURATIONS
+CORS_ALLOWED_ORIGINS = ["*"]
+
+
+CORS_ALLOW_CREDENTIALS = True
