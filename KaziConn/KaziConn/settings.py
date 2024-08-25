@@ -15,7 +15,7 @@ SECRET_KEY = 'django-insecure-tr4p!i-k=$ufnvb2_sg-d1-005=zfl8@si!98bz3@kq3fctn#1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'user_account',
+    'axes',
     
 ]
 
@@ -46,6 +47,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "allauth.account.middleware.AccountMiddleware",
+    'axes.middleware.AxesMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
 ]
 
 ROOT_URLCONF = 'KaziConn.urls'
@@ -128,6 +131,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
+    'axes.backends.AxesStandaloneBackend',  # django axes
 ]
 
 # Redirect URLs after login/logout
@@ -141,3 +145,10 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'optional'  # or 'mandatory'
 SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'  # To disable email verification for social accounts
+ 
+
+#django-axes configurations
+AXES_FAILURE_LIMIT = 5  # Number of failed login attempts before locking the account
+AXES_COOLOFF_TIME = 0.25  # Cool-off time in hours
+AXES_LOCK_OUT_AT_FAILURE = True  # Lock out user on failure
+
