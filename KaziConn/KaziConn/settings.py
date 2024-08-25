@@ -146,7 +146,6 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'optional'  # or 'mandatory'
 SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'  # To disable email verification for social accounts
  
-
 #django-axes configurations
 AXES_FAILURE_LIMIT = 5  # Number of failed login attempts before locking the account
 AXES_COOLOFF_TIME = 0.25  # Cool-off time in hours
