@@ -183,4 +183,7 @@ AXES_COOLOFF_TIME = 0.25  # Cool-off time in hours
 AXES_LOCK_OUT_AT_FAILURE = True  # Lock out user on failure
 
 #CORS HEADERS CONFIGURATIONS
+CORS_ALLOWED_ORIGINS = ["*"]
+
+
 CORS_ALLOW_CREDENTIALS = True
